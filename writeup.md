@@ -27,6 +27,7 @@ The goals / steps of this project are the following:
 [image6]: ./traffic_external_test_images/class04_speedlimit70/class04_speedlimit70_image01.jpg "Traffic Sign 3"
 [image7]: ./traffic_external_test_images/class11_rightofwaynextintersection/class11_rightofwaynextintersection_image01.jpg "Traffic Sign 4"
 [image8]: ./traffic_external_test_images/class12_priorityroad/class12_priorityroad_image01.jpg "Traffic Sign 5"
+[trainging_set_stat_image]: ./report_images/training_set_stats.png "Training Set Stat"
 
 Here is a link to my [project code](Traffic_Sign_Classifier.ipynb)
 
@@ -34,7 +35,7 @@ Here is a link to my [project code](Traffic_Sign_Classifier.ipynb)
 ###### back to [Table of Contents](#table-of-contents)
 The trafffic sign data sets that are downloaded from the project page consists of training, validation and testing set files. Each file is a pickled numpy arrays of RGB images that have already been cropped, centered and resizezd to 32x32 pixels. I checked the file size to make sure that I can load the entire dataset into memory, then I used numpy to find to calculate summary statistics of the traffic data set:
 * The size of training set is : 34799 
-* The size of the validation set is 12630
+* The size of the validation set is 4410
 * The size of test set is 12630
 * The shape of a traffic sign image is (32, 32, 3)
 * The number of unique classes/labels in the data set is 43
@@ -43,7 +44,7 @@ The trafffic sign data sets that are downloaded from the project page consists o
 
 Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
 
-![alt text][image1]
+![Training Set Stat][trainging_set_stat_image]
 
 ###Design and Test a Model Architecture
 
