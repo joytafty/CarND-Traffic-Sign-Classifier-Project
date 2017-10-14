@@ -1,7 +1,7 @@
 # **Traffic Sign Recognition** 
 
 ## Table of Contents ##
-- [Data Exploration](#data-exploration)
+- [Data Set Exploration](#data-set-exploration)
 - [Preprocessing](#preprocessing)
 - [Model Building](#model-building)
 - [Model Evaluation](#model-evaluation)
@@ -30,7 +30,8 @@ The goals / steps of this project are the following:
 
 Here is a link to my [project code](Traffic_Sign_Classifier.ipynb)
 
-###Data Set Summary & Exploration
+### Data Set Exploration ###
+###### back to [Table of Contents](#table-of-contents)
 The trafffic sign data sets that are downloaded from the project page consists of training, validation and testing set files. Each file is a pickled numpy arrays of RGB images that have already been cropped, centered and resizezd to 32x32 pixels. I checked the file size to make sure that I can load the entire dataset into memory, then I used numpy to find to calculate summary statistics of the traffic data set:
 * The size of training set is : 34799 
 * The size of the validation set is 12630
