@@ -27,10 +27,16 @@ The goals / steps of this project are the following:
 [image6]: ./traffic_external_test_images/class04_speedlimit70/class04_speedlimit70_image01.jpg "Traffic Sign 3"
 [image7]: ./traffic_external_test_images/class11_rightofwaynextintersection/class11_rightofwaynextintersection_image01.jpg "Traffic Sign 4"
 [image8]: ./traffic_external_test_images/class12_priorityroad/class12_priorityroad_image01.jpg "Traffic Sign 5"
+[trainging_set_stat_image]: ./report_images/training_set_stats.png "Training Set Stat"
 [sampled_class_00]: ./report_images/sampled_class00.png "Class 00 sampled images"
 [sampled_class_09]: ./report_images/sampled_class09.png "Class 09 sampled images"
 [sampled_class_17]: ./report_images/sampled_class17.png "Class 17 sampled images"
-[trainging_set_stat_image]: ./report_images/training_set_stats.png "Training Set Stat"
+
+[hist_eq_1_before]: ./report_images/histogramEqualize/image1.png "histogram equalize before image 1"
+[hist_eq_1_after]: ./report_images/histogramEqualize/histEq_image1.png "histogram equalize after image 1"
+[hist_eq_3_before]: ./report_images/histogramEqualize/image3.png "histogram equalize before image 3"
+[hist_eq_3_after]: ./report_images/histogramEqualize/histEq_image3.png "histogram equalize after image 3"
+
 
 Here is a link to my [project code](Traffic_Sign_Classifier.ipynb)
 
@@ -45,22 +51,24 @@ The trafffic sign data sets that are downloaded from the project page consists o
 
 Traffic sign identification is a multiclass classification problem which takes a fixed size input (32x32x3) numpy array and output softmax probabilities of all 43 classes. Before building and training the model, I determine whether there's class imbalance in the training set by computing the number of training images per classe. Here's the bar chart that summary the number of training images in each class.
 
-The number of training images varies widely by 10 fold from < 200 images for some classes () to > 2000 images for others. I use the training set as provide for the first few rounds of model training, but I do take note that the class imbalance in this training set might impact the overall accuracy of the model.
+The number of training images varies widely by 10 fold from < 200 images for some classes () to > 2000 images for others. I use the training set as provide for the first few rounds of model training, but I do take note that the class imbalance in this training set might impact the overall accuracy of the model. 
 
 ![Training Set Stat][trainging_set_stat_image]
 
 ###Design and Test a Model Architecture
+
+### Preprocessing ###
+###### back to [Table of Contents](#table-of-contents)
 
 ####1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
 ![sampled_class_00][sampled_class_00]
 Sample training set images in class 0. 
 
-
 ![sampled_class_17][sampled_class_17]
 Sample training set images in class 17. 
 
-From visual inspection, I found that images in each classes are very different in average illumination across all channels and the pixel intensities in many of the images do not span the entire dynamic range. To adjust the dynamic range of the images, I used cv2's histogram equalization on RGB channels of each images separately and restack the channels. 
+From visual inspection, I found that images in each classes are very different in average illumination across all channels and the pixel intensities in many of the images do not span the entire dynamic range. To adjust the dynamic range of the images, I used cv2's histogram equalization on RGB channels of each images separately and restack the channels. I think there's might be signal in the different channel so I use all the color channels as input to the model.
 
 ```python
 def equalizeHistRbg(image): 
@@ -70,10 +78,13 @@ def equalizeHistRbg(image):
     return eq
 ```
 
+Here is an example of a traffic sign image before and after histogram equalization.
 
-Here is an example of a traffic sign image before and after grayscaling.
+![hist_eq_1_before][hist_eq_1_before]
+![hist_eq_1_after][hist_eq_1_after]
 
-![alt text][image2]
+![hist_eq_3_before][hist_eq_3_before]
+![hist_eq_3_after][hist_eq_3_after]
 
 As a last step, I normalized the image data because ...
 
