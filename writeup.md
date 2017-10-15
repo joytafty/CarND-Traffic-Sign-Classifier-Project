@@ -36,7 +36,7 @@ Here is a link to my [project code](Traffic_Sign_Classifier.ipynb)
 
 ### Data Set Exploration ###
 ###### back to [Table of Contents](#table-of-contents)
-The trafffic sign data sets that are downloaded from the project page consists of training, validation and testing set files. Each file is a pickled numpy arrays of RGB images that have already been cropped, centered and resizezd to 32x32 pixels. I checked the file size to make sure that I can load the entire dataset into memory, then I used numpy to find to calculate summary statistics of the traffic data set:
+The trafffic sign data sets that are downloaded from the project page consists of training, validation and testing set files. Each file is a pickled numpy arrays of RGB images that have already been cropped,and resizezd to 32x32 pixels. Many of the images have been centered while a few are not. After checking that the data set size will fit into memory, I load the entire dataset and use numpy to find to calculate summary statistics of the traffic data set:
 * The size of training set is : 34799 
 * The size of the validation set is 4410
 * The size of test set is 12630
