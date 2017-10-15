@@ -95,15 +95,17 @@ def normalize(image):
 In the first iteration of the model training, I train a baseline model with the imbalance training set as I'm interested in how this base line model perform without additional data. To add more data to the the data set, I am planning to use `keras`'s `datagen` module. I have implemented the code for generating more dataset here. 
 
 ```python
+from keras.preprocessing.image import ImageDataGenerator
+
 datagen = ImageDataGenerator(
-    featurewise_center=True,
-    featurewise_std_normalization=True,
-    rotation_range=20,
-    width_shift_range=0.2,
-    height_shift_range=0.2,
-    horizontal_flip=False
-)
-datagen.fit(X_train.astype(float))
+        rotation_range=40,
+        width_shift_range=0.2,
+        height_shift_range=0.2,
+        rescale=1./255,
+        shear_range=0.2,
+        zoom_range=0.2,
+        horizontal_flip=False,
+        fill_mode='nearest')
 ```
 
 Here is an example of an original image and an augmented image:
