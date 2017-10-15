@@ -22,11 +22,14 @@ The goals / steps of this project are the following:
 [image1]: ./examples/visualization.jpg "Visualization"
 [image2]: ./examples/grayscale.jpg "Grayscaling"
 [image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./traffic_external_test_images/class11_rightofwaynextintersection/class11_rightofwaynextintersection_image01.jpg "Traffic Sign 1"
-[image5]: ./traffic_external_test_images/class12_priorityroad/class12_priorityroad_image01.jpg "Traffic Sign 2"
-[image6]: ./traffic_external_test_images/class13_yield/class13_yield_image01.jpg "Traffic Sign 3"
-[image7]: ./traffic_external_test_images/class14_stop/class14_stop_image01.jpg "Traffic Sign 4"
-[image8]: ./traffic_external_test_images/class17_noentry/class17_noentry_image01.jpg "Traffic Sign 5"
+[traffic_sign_1]: ./traffic_external_test_images/class11_rightofwaynextintersection/class11_rightofwaynextintersection_image01.jpg "Traffic Sign 1"
+[traffic_sign_2]: ./traffic_external_test_images/class12_priorityroad/class12_priorityroad_image01.jpg "Traffic Sign 2"
+[traffic_sign_3]: ./traffic_external_test_images/class13_yield/class13_yield_image01.jpg "Traffic Sign 3"
+[traffic_sign_4]: ./traffic_external_test_images/class14_stop/class14_stop_image01.jpg "Traffic Sign 4"
+[traffic_sign_5]: ./traffic_external_test_images/class17_noentry/class17_noentry_image01.jpg "Traffic Sign 5"
+[traffic_sign_6]: ./traffic_external_test_images/class32_endofallspeedpassinglimit/class32_endofallspeedpassinglimit_image01.jpg "Traffic Sign 6"
+[traffic_sign_7]: ./traffic_external_test_images/class38_keepright/class38_keepright_image01.jpg "Traffic Sign 7"
+[traffic_sign_8]: ./traffic_external_test_images/class40_roundabout/class40_roundabout_image01.jpg "Traffic Sign 8"
 [trainging_set_stat_image]: ./report_images/training_set_stats.png "Training Set Stat"
 [sampled_class_00]: ./report_images/sampled_class00.png "Class 00 sampled images"
 [sampled_class_09]: ./report_images/sampled_class09.png "Class 09 sampled images"
@@ -174,8 +177,8 @@ If a well known architecture was chosen:
 
 Here are five German traffic signs that I found on the web:
 
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
+![traffic_sign_1][traffic_sign_1] ![traffic_sign_2][traffic_sign_2] ![traffic_sign_3][traffic_sign_3] ![traffic_sign_4][traffic_sign_4] 
+![traffic_sign_5][traffic_sign_5] ![traffic_sign_6][traffic_sign_6] ![traffic_sign_7][traffic_sign_7] ![traffic_sign_8][traffic_sign_8]
 
 The first image might be difficult to classify because ...
 
