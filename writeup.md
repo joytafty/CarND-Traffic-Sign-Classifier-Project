@@ -27,28 +27,38 @@ The goals / steps of this project are the following:
 [image6]: ./traffic_external_test_images/class04_speedlimit70/class04_speedlimit70_image01.jpg "Traffic Sign 3"
 [image7]: ./traffic_external_test_images/class11_rightofwaynextintersection/class11_rightofwaynextintersection_image01.jpg "Traffic Sign 4"
 [image8]: ./traffic_external_test_images/class12_priorityroad/class12_priorityroad_image01.jpg "Traffic Sign 5"
+[sampled_class_00]: ./report_images/sampled_class00.png "Class 00 sampled images"
+[sampled_class_09]: ./report_images/sampled_class09.png "Class 09 sampled images"
+[sampled_class_17]: ./report_images/sampled_class17.png "Class 17 sampled images"
 [trainging_set_stat_image]: ./report_images/training_set_stats.png "Training Set Stat"
 
 Here is a link to my [project code](Traffic_Sign_Classifier.ipynb)
 
 ### Data Set Exploration ###
 ###### back to [Table of Contents](#table-of-contents)
-The trafffic sign data sets that are downloaded from the project page consists of training, validation and testing set files. Each file is a pickled numpy arrays of RGB images that have already been cropped, centered and resizezd to 32x32 pixels. I checked the file size to make sure that I can load the entire dataset into memory, then I used numpy to find to calculate summary statistics of the traffic data set:
+The trafffic sign data sets that are downloaded from the project page consists of training, validation and testing set files. Each file is a pickled numpy arrays of RGB images that have already been cropped,and resizezd to 32x32 pixels. Many of the images have been centered while a few are not. After checking that the data set size will fit into memory, I load the entire dataset and use numpy to find to calculate summary statistics of the traffic data set:
 * The size of training set is : 34799 
 * The size of the validation set is 4410
 * The size of test set is 12630
 * The shape of a traffic sign image is (32, 32, 3)
 * The number of unique classes/labels in the data set is 43
 
-####2. Include an exploratory visualization of the dataset.
+Traffic sign identification is a multiclass classification problem which takes a fixed size input (32x32x3) numpy array and output softmax probabilities of all 43 classes. Before building and training the model, I determine whether there's class imbalance in the training set by computing the number of training images per classe. Here's the bar chart that summary the number of training images in each class.
 
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
+The number of training images varies widely by 10 fold from < 200 images for some classes () to > 2000 images for others. I use the training set as provide for the first few rounds of model training, but I do take note that the class imbalance in this training set might impact the overall accuracy of the model.
 
 ![Training Set Stat][trainging_set_stat_image]
 
 ###Design and Test a Model Architecture
 
 ####1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
+
+![sampled_class_00][sampled_class_00]
+Sample training set images in class 0. 
+
+
+![sampled_class_17][sampled_class_17]
+Sample training set images in class 17. 
 
 From visual inspection, I found that images in each classes are very different in average illumination across all channels and the pixel intensities in many of the images do not span the entire dynamic range. To adjust the dynamic range of the images, I used cv2's histogram equalization on RGB channels of each images separately and restack the channels. 
 
