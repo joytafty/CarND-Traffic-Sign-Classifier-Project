@@ -86,11 +86,25 @@ Here is an example of a traffic sign image before and after histogram equalizati
 ![hist_eq_3_before][hist_eq_3_before]
 ![hist_eq_3_after][hist_eq_3_after]
 
-As a last step, I normalized the image data because ...
+As a last step, I normalized the image data to make sure that the input values range from 0 - 1. The input images are 8-bit i.e. the intensity values range from 0 - 128. Here's my implementation of the image normalization. 
 
-I decided to generate additional data because ... 
+```python
+def normalize(image):
+    return (image - 128)/image
+```
+In the first iteration of the model training, I train a baseline model with the imbalance training set as I'm interested in how this base line model perform without additional data. To add more data to the the data set, I am planning to use `keras`'s `datagen` module. I have implemented the code for generating more dataset here. 
 
-To add more data to the the data set, I used the following techniques because ... 
+```python
+datagen = ImageDataGenerator(
+    featurewise_center=True,
+    featurewise_std_normalization=True,
+    rotation_range=20,
+    width_shift_range=0.2,
+    height_shift_range=0.2,
+    horizontal_flip=False
+)
+datagen.fit(X_train.astype(float))
+```
 
 Here is an example of an original image and an augmented image:
 
@@ -98,6 +112,8 @@ Here is an example of an original image and an augmented image:
 
 The difference between the original data set and the augmented data set is the following ... 
 
+### Preprocessing ###
+###### back to [Table of Contents](#table-of-contents)
 
 ####2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
