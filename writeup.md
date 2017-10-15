@@ -65,14 +65,6 @@ The number of training images varies widely by 10 fold from < 200 images for som
 ### Preprocessing ###
 ###### back to [Table of Contents](#table-of-contents)
 
-####1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
-
-![sampled_class_00][sampled_class_00]
-Sample training set images in class 0. 
-
-![sampled_class_17][sampled_class_17]
-Sample training set images in class 17. 
-
 From visual inspection, I found that images in each classes are very different in average illumination across all channels and the pixel intensities in many of the images do not span the entire dynamic range. To adjust the dynamic range of the images, I used cv2's histogram equalization on RGB channels of each images separately and restack the channels. I think there's might be signal in the different channel so I use all the color channels as input to the model.
 
 ```python
@@ -112,12 +104,6 @@ datagen = ImageDataGenerator(
         horizontal_flip=False,
         fill_mode='nearest')
 ```
-
-Here is an example of an original image and an augmented image:
-
-![alt text][image3]
-
-The difference between the original data set and the augmented data set is the following ... 
 
 ### Model Architecture ###
 ###### back to [Table of Contents](#table-of-contents)
