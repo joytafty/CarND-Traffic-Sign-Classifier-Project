@@ -86,11 +86,11 @@ Here is an example of a traffic sign image before and after histogram equalizati
 ![hist_eq_3_before][hist_eq_3_before]
 ![hist_eq_3_after][hist_eq_3_after]
 
-As a last step, I normalized the image data to make sure that the input values range from 0 - 1. The input images are 8-bit i.e. the intensity values range from 0 - 128. Here's my implementation of the image normalization. 
+As a last step, I normalized the image data to make sure that the input values range from -0.5 - 0.5. The input intensity array are 8-bit (`dtype=uint8`) i.e. the intensity values range from 0 - 256. To apply rescaling, element-wise subtract 128 from the input intensity value then divide by 256. Here's my implementation of the image normalization. 
 
 ```python
 def normalize(image):
-    return (image - 128)/image
+    return (image - 128)/256
 ```
 In the first iteration of the model training, I train a baseline model with the imbalance training set as I'm interested in how this base line model perform without additional data. To add more data to the the data set, I am planning to use `keras`'s `datagen` module. I have implemented the code for generating more dataset here. 
 
