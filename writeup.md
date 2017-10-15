@@ -22,7 +22,7 @@ The goals / steps of this project are the following:
 [image1]: ./examples/visualization.jpg "Visualization"
 [image2]: ./examples/grayscale.jpg "Grayscaling"
 [image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./traffic_external_test_images/class11_rightofwaynextintersection/ "Tclass11_rightofwaynextintersection_image01.jpg raffic Sign 1"
+[image4]: ./traffic_external_test_images/class11_rightofwaynextintersection/class11_rightofwaynextintersection_image01.jpg "Traffic Sign 1"
 [image5]: ./traffic_external_test_images/class12_priorityroad/class12_priorityroad_image01.jpg "Traffic Sign 2"
 [image6]: ./traffic_external_test_images/class13_yield/class13_yield_image01.jpg "Traffic Sign 3"
 [image7]: ./traffic_external_test_images/class14_stop/class14_stop_image01.jpg "Traffic Sign 4"
