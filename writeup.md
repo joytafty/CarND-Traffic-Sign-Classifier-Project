@@ -165,8 +165,8 @@ I'm planning to add dropout layers in the next iteration of the model, but I'm r
 #### Testing On New Images ####
 For testing on new images, I downloaded 12 German traffic signs from on the Google images, cropped and resized them to 32x32x3. Here are the example of the images before cropping and resizing:
 
-![traffic_sign_1][traffic_sign_1] ![traffic_sign_2][traffic_sign_2] ![traffic_sign_3][traffic_sign_3] ![traffic_sign_4][traffic_sign_4] 
-![traffic_sign_5][traffic_sign_5] ![traffic_sign_6][traffic_sign_6] ![traffic_sign_7][traffic_sign_7] ![traffic_sign_8][traffic_sign_8]
+![traffic_sign_1][traffic_sign_1] ![traffic_sign_3][traffic_sign_3] ![traffic_sign_4][traffic_sign_4] ![traffic_sign_6][traffic_sign_6] 
+![traffic_sign_10][traffic_sign_10] ![traffic_sign_11][traffic_sign_11] ![traffic_sign_12][traffic_sign_12] ![traffic_sign_8][traffic_sign_8]
 
 ####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
@@ -176,7 +176,7 @@ Here are the results of the predictions:
 ![web_result_3][web_result_3]
 ![web_result_4][web_result_4]
 ![web_result_6][web_result_6]
-![web_result_8][web_result_8]
+![web_result_10][web_result_10]
 
 The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
 
