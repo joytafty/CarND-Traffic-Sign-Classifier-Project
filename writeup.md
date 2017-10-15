@@ -43,6 +43,17 @@ The goals / steps of this project are the following:
 [hist_eq_3_after]: ./report_images/histogramEqualize/histEq_image3.png "histogram equalize after image 3"
 
 
+[web_result_1]: ./report_images/webImagePredictions/test_result1.png
+[web_result_2]: ./report_images/webImagePredictions/test_result2.png
+[web_result_3]: ./report_images/webImagePredictions/test_result3.png
+[web_result_4]: ./report_images/webImagePredictions/test_result4.png
+[web_result_5]: ./report_images/webImagePredictions/test_result5.png
+[web_result_6]: ./report_images/webImagePredictions/test_result6.png
+[web_result_7]: ./report_images/webImagePredictions/test_result7.png
+[web_result_8]: ./report_images/webImagePredictions/test_result8.png
+[web_result_9]: ./report_images/webImagePredictions/test_result9.png
+
+
 Here is a link to my [project code](Traffic_Sign_Classifier.ipynb)
 
 ### Data Set Exploration ###
@@ -157,20 +168,15 @@ For testing on new images, I downloaded 12 German traffic signs from on the Goog
 ![traffic_sign_1][traffic_sign_1] ![traffic_sign_2][traffic_sign_2] ![traffic_sign_3][traffic_sign_3] ![traffic_sign_4][traffic_sign_4] 
 ![traffic_sign_5][traffic_sign_5] ![traffic_sign_6][traffic_sign_6] ![traffic_sign_7][traffic_sign_7] ![traffic_sign_8][traffic_sign_8]
 
-The first image might be difficult to classify because ...
-
 ####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
-Here are the results of the prediction:
+Here are the results of the predictions:
 
-| Image			        |     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
-
+![web_result_1][web_result_1]
+![web_result_3][web_result_3]
+![web_result_4][web_result_4]
+![web_result_6][web_result_6]
+![web_result_8][web_result_8]
 
 The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
 
