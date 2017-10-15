@@ -45,7 +45,7 @@ The trafffic sign data sets that are downloaded from the project page consists o
 
 Traffic sign identification is a multiclass classification problem which takes a fixed size input (32x32x3) numpy array and output softmax probabilities of all 43 classes. Before building and training the model, I determine whether there's class imbalance in the training set by computing the number of training images per classe. Here's the bar chart that summary the number of training images in each class.
 
-The number of training images vary widely by 10 fold from < 200 images for some classes () to > 2000 images for others. I use the training set as provide for the first few rounds of model training, but I do take note that the class imbalance in this training set might impact the overall accuracy of the model.
+The number of training images varies widely by 10 fold from < 200 images for some classes () to > 2000 images for others. I use the training set as provide for the first few rounds of model training, but I do take note that the class imbalance in this training set might impact the overall accuracy of the model.
 
 ![Training Set Stat][trainging_set_stat_image]
 
@@ -55,6 +55,8 @@ The number of training images vary widely by 10 fold from < 200 images for some 
 
 ![sampled_class_00][sampled_class_00]
 Sample training set images in class 0. 
+
+
 ![sampled_class_17][sampled_class_17]
 Sample training set images in class 17. 
 
