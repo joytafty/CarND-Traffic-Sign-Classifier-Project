@@ -119,19 +119,24 @@ The difference between the original data set and the augmented data set is the f
 
 ####2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
-My final model consisted of the following layers:
+My baseline model architecture is inspired by LeNet. Since there are more classes in Traffic Sign data sets than MNIST, I add a one more Convolution-Relu-MaxPool stack and two more fully connected layers to make the model deeper. Here's the final architecture of my baseline model.
 
-| Layer         		|     Description	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
-| RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
-|						|												|
-|						|												|
+| Layer                 		|     Description	        					| 
+|:-----------------------------:|:---------------------------------------------:| 
+| Input         		        | 32x32x3 RGB image   							| 
+| Stack 1: Convolution 5x5     	| 1x1 stride, same padding, outputs 32x32x64 	|
+| Stack 1: RELU					|												|
+| Stack 1: Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
+| Stack 2: Convolution 5x5     	| 1x1 stride, same padding, outputs 32x32x64 	|
+| Stack 2: RELU					|												|
+| Stack 2: Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
+| Stack 3: Convolution 5x5     	| 1x1 stride, same padding, outputs 32x32x64 	|
+| Stack 3: RELU					|												|
+| Stack 3: Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
+| Fully connected 1	        	| etc.        									|
+| Fully connected 2		        | etc.        									|
+| Fully connected 3		        | etc.        									|
+| Softmax				        | etc.        									|
  
 
 
