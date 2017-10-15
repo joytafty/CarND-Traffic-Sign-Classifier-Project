@@ -6,7 +6,7 @@
 - [Model Architecture](#model-architecture)
 - [Model Training and Evaluation](#model-training-and-evaluation)
     - [Training Experiments](#training-experiments)
-    - [Evaluation of New Images](#evaluation-on-new-images)
+    - [Testing On New Images](#testing-on-new-images)
 - [Suggestion for Improvements](#suggestion-for-improvements)
 
 **Build a Traffic Sign Recognition Project**
