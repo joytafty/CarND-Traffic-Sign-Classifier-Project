@@ -3,7 +3,7 @@
 ## Table of Contents ##
 - [Data Set Exploration](#data-set-exploration)
 - [Preprocessing](#preprocessing)
-- [Model Building](#model-building)
+- [Model Architecture](#model-architecture)
 - [Model Evaluation](#model-evaluation)
 - [Suggestion for Improvements](#suggestion-for-improvements)
 
@@ -114,7 +114,7 @@ Here is an example of an original image and an augmented image:
 
 The difference between the original data set and the augmented data set is the following ... 
 
-### Preprocessing ###
+### Model Architecture ###
 ###### back to [Table of Contents](#table-of-contents)
 
 ####2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
