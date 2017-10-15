@@ -5,6 +5,8 @@
 - [Preprocessing](#preprocessing)
 - [Model Architecture](#model-architecture)
 - [Model Training and Evaluation](#model-training-and-evaluation)
+    - [Training Experiments](#training-experiments)
+    - [Evaluation of New Images](#evaluation-on-new-images)
 - [Suggestion for Improvements](#suggestion-for-improvements)
 
 **Build a Traffic Sign Recognition Project**
@@ -95,7 +97,7 @@ As a last step, I normalized the image data to make sure that the input values r
 def normalize(image):
     return (image - 128)/256
 ```
-In the first iteration of the model training, I train a baseline model with the imbalance training set as I'm interested in how this base line model perform without additional data. To add more data to the the data set, I am planning to use `keras`'s `datagen` module. I have implemented the code for generating more dataset here. 
+In the first iteration of the model training, I train a baseline model with the imbalance training set as I'm interested in how this base line model perform without generating additional data. To add more data to the the data set, I am planning to use `keras`'s `datagen` module. I have implemented the code for generating more dataset here. 
 
 ```python
 from keras.preprocessing.image import ImageDataGenerator
@@ -120,62 +122,51 @@ The difference between the original data set and the augmented data set is the f
 ### Model Architecture ###
 ###### back to [Table of Contents](#table-of-contents)
 
-####2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
-
-My baseline model architecture is inspired by LeNet. Since there are more classes in Traffic Sign data sets than MNIST, I add a one more Convolution-Relu-MaxPool stack and two more fully connected layers to make the model deeper. Here's the final architecture of my baseline model.
+My baseline model architecture is inspired by LeNet. Since there are more classes in Traffic Sign data sets than MNIST, I add a one more Convolution-Relu-MaxPool stack and two more fully connected layers to make the model deeper. Here's the final architecture of my baseline model. Having more convolutional layers allows for learning hierarchically higher level features that composed of low-level gradient features (directional 1D edges).
 
 | Layer                 		|     Description	        					| 
 |:-----------------------------:|:---------------------------------------------:| 
 | Input         		        | 32x32x3 RGB image   							| 
-| Stack 1: Convolution 5x5     	| 1x1 stride, same padding, outputs 32x32x16 	|
-| Stack 1: RELU					|												|
-| Stack 1: Max pooling	      	| 2x2 stride, outputs 16x16x64 		    		|
-| Stack 2: Convolution 5x5     	| 1x1 stride, same padding, outputs 16x16x64 	|
+| Stack 1: Convolution 5x5     	| 1x1 stride, same padding, outputs 28x28x16 	|
+| Stack 1: RELU Activation		|												|
+| Stack 1: Max pooling	      	| 2x2 stride, outputs 14x14x16 		    		|
+| Stack 2: Convolution 5x5     	| 1x1 stride, same padding, outputs 10x10x64 	|
 | Stack 2: RELU					|												|
-| Stack 2: Max pooling	      	| 2x2 stride, outputs 4x4x256 		    		|
-| Stack 3: Convolution 5x5     	| 1x1 stride, same padding, outputs 4x4x256 	|
+| Stack 2: Max pooling	      	| 2x2 stride, outputs 5x5x64 		    		|
+| Stack 3: Convolution 5x5     	| 1x1 stride, same padding, outputs 5x5x256 	|
 | Stack 3: RELU					|												|
-| Stack 3: Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Fully connected 1	        	| etc.        									|
-| Fully connected 2		        | etc.        									|
-| Fully connected 3		        | etc.        									|
-| Softmax				        | etc.        									|
+| Stack 3: Max pooling	      	| 2x2 stride,  outputs 2x2x256   				|
+| Flatten Layer 	        	| outputs 1024 									|
+| Fully connected 1	        	| outputs 512									|
+| Fully connected 2		        | outputs 256 									|
+| Fully connected 3		        | outputs 128 									|
+| Softmax				        | outputs 43 									|
  
-
 
 ### Model Training And Evaluation ###
 ###### back to [Table of Contents](#table-of-contents)
-####3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
+#### Training Experiments ####
+To train the model, I set the placeholders for the inputs and the the labels as array of 32-bit float array and one hot encoded 32-bit int array respectively. During the training, the model weights are updated iteratively to minimize the softmax cross entropy loss of the predicted and the target classes. For the cross entropy minimization, I use tensorflow's [AdamOptimizer](https://arxiv.org/abs/1412.6980v8) (Adaptive Moment Estimation) algorithm - a variant of mini-batch stochastic gradient descent with adaptive learning rate and momentum which has been shown to work well for supervised computer vision tasks.
 
-Optimizer: AdamOptimizer
-Number of Epoch: 
-Learning Rate: 
+I started off using the LeNet architecture with the output size set to 43 (instead of 10 in the MNIST example). Without any modification to the model architecture, LeNet was able to achieve around 0.6 validation accuracy which gives me reassurance that this architecture is a good starting point, but might not be deep enough for Traffic Sign classification. While experimenting with the model architecture, I initially set the batch size to be small (starting from 128). With this initial model training, I start to get a sense of how quickly the validation accuracy improves over training interations and how these changaes as I add more layers and increase the training batch size. For the final training, I chose the batch size to as large as it would fit into my personal computer memory and I found 1024 to work well. After finalizing the model architecture and batch size, I experimented with varying the learning rate from 0.1 to 0.00001. I found that the optimal value to be around 0.001 and anything below 0.0001 to be too slow. With the learning rate = 0.001, I reproducibly observe that athe validation accuracy rapidly increases from ~0.3 in the first iteration to 0.9 after ~20 iterations and gradually incrementally increases after 30 iterations and in most training the validation accuracy does not improve after 50 iteractions. 
 
-####4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
+Here is the summary of my approaches to tune the model architecture while using the rate of increase in validation accuracy as a proxy of model training improvements: 
+* Start with LeNet Architecture
+* Increase the number of units
+* Add Convolutional Layers
+* Add Fully Connected Layers
+* Lower the learning rate
+* Increase batch size
 
-My final model results were:
-* training set accuracy of 1.000
-* validation set accuracy of 0.947 
-* test set accuracy of 0.910
+With the final architecture discussed above, my modified LeNet model was able to achieve the following accuracy:
+* training set accuracy of **1.000**
+* validation set accuracy of **0.947**
+* test set accuracy of **0.910**
 
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
+I'm planning to add dropout layers in the next iteration of the model, but I'm running out of time. 
 
-If a well known architecture was chosen:
-* What architecture was chosen?
-* Why did you believe it would be relevant to the traffic sign application?
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
- 
-
-###Test a Model on New Images
-
-####1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
-
-Here are five German traffic signs that I found on the web:
+#### Testing On New Images ####
+For testing on new images, I downloaded 12 German traffic signs from on the Google images, cropped and resized them to 32x32x3. Here are the example of the images before cropping and resizing:
 
 ![traffic_sign_1][traffic_sign_1] ![traffic_sign_2][traffic_sign_2] ![traffic_sign_3][traffic_sign_3] ![traffic_sign_4][traffic_sign_4] 
 ![traffic_sign_5][traffic_sign_5] ![traffic_sign_6][traffic_sign_6] ![traffic_sign_7][traffic_sign_7] ![traffic_sign_8][traffic_sign_8]
