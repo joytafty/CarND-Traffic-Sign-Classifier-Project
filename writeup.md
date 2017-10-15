@@ -4,7 +4,7 @@
 - [Data Set Exploration](#data-set-exploration)
 - [Preprocessing](#preprocessing)
 - [Model Architecture](#model-architecture)
-- [Model Evaluation](#model-evaluation)
+- [Model Training and Evaluation](#model-training-and-evaluation)
 - [Suggestion for Improvements](#suggestion-for-improvements)
 
 **Build a Traffic Sign Recognition Project**
@@ -124,13 +124,13 @@ My baseline model architecture is inspired by LeNet. Since there are more classe
 | Layer                 		|     Description	        					| 
 |:-----------------------------:|:---------------------------------------------:| 
 | Input         		        | 32x32x3 RGB image   							| 
-| Stack 1: Convolution 5x5     	| 1x1 stride, same padding, outputs 32x32x64 	|
+| Stack 1: Convolution 5x5     	| 1x1 stride, same padding, outputs 32x32x16 	|
 | Stack 1: RELU					|												|
-| Stack 1: Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Stack 2: Convolution 5x5     	| 1x1 stride, same padding, outputs 32x32x64 	|
+| Stack 1: Max pooling	      	| 2x2 stride, outputs 16x16x64 		    		|
+| Stack 2: Convolution 5x5     	| 1x1 stride, same padding, outputs 16x16x64 	|
 | Stack 2: RELU					|												|
-| Stack 2: Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Stack 3: Convolution 5x5     	| 1x1 stride, same padding, outputs 32x32x64 	|
+| Stack 2: Max pooling	      	| 2x2 stride, outputs 4x4x256 		    		|
+| Stack 3: Convolution 5x5     	| 1x1 stride, same padding, outputs 4x4x256 	|
 | Stack 3: RELU					|												|
 | Stack 3: Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
 | Fully connected 1	        	| etc.        									|
@@ -140,16 +140,20 @@ My baseline model architecture is inspired by LeNet. Since there are more classe
  
 
 
+### Model Training And Evaluation ###
+###### back to [Table of Contents](#table-of-contents)
 ####3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
-To train the model, I used an ....
+Optimizer: AdamOptimizer
+Number of Epoch: 
+Learning Rate: 
 
 ####4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
 My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ?
+* training set accuracy of 1.000
+* validation set accuracy of 0.947 
+* test set accuracy of 0.910
 
 If an iterative approach was chosen:
 * What was the first architecture that was tried and why was it chosen?
