@@ -3,8 +3,8 @@
 ## Table of Contents ##
 - [Data Set Exploration](#data-set-exploration)
 - [Preprocessing](#preprocessing)
-- [Model Building](#model-building)
-- [Model Evaluation](#model-evaluation)
+- [Model Architecture](#model-architecture)
+- [Model Training and Evaluation](#model-training-and-evaluation)
 - [Suggestion for Improvements](#suggestion-for-improvements)
 
 **Build a Traffic Sign Recognition Project**
@@ -27,10 +27,16 @@ The goals / steps of this project are the following:
 [image6]: ./traffic_external_test_images/class04_speedlimit70/class04_speedlimit70_image01.jpg "Traffic Sign 3"
 [image7]: ./traffic_external_test_images/class11_rightofwaynextintersection/class11_rightofwaynextintersection_image01.jpg "Traffic Sign 4"
 [image8]: ./traffic_external_test_images/class12_priorityroad/class12_priorityroad_image01.jpg "Traffic Sign 5"
+[trainging_set_stat_image]: ./report_images/training_set_stats.png "Training Set Stat"
 [sampled_class_00]: ./report_images/sampled_class00.png "Class 00 sampled images"
 [sampled_class_09]: ./report_images/sampled_class09.png "Class 09 sampled images"
 [sampled_class_17]: ./report_images/sampled_class17.png "Class 17 sampled images"
-[trainging_set_stat_image]: ./report_images/training_set_stats.png "Training Set Stat"
+
+[hist_eq_1_before]: ./report_images/histogramEqualize/image1.png "histogram equalize before image 1"
+[hist_eq_1_after]: ./report_images/histogramEqualize/histEq_image1.png "histogram equalize after image 1"
+[hist_eq_3_before]: ./report_images/histogramEqualize/image3.png "histogram equalize before image 3"
+[hist_eq_3_after]: ./report_images/histogramEqualize/histEq_image3.png "histogram equalize after image 3"
+
 
 Here is a link to my [project code](Traffic_Sign_Classifier.ipynb)
 
@@ -45,22 +51,24 @@ The trafffic sign data sets that are downloaded from the project page consists o
 
 Traffic sign identification is a multiclass classification problem which takes a fixed size input (32x32x3) numpy array and output softmax probabilities of all 43 classes. Before building and training the model, I determine whether there's class imbalance in the training set by computing the number of training images per classe. Here's the bar chart that summary the number of training images in each class.
 
-The number of training images varies widely by 10 fold from < 200 images for some classes () to > 2000 images for others. I use the training set as provide for the first few rounds of model training, but I do take note that the class imbalance in this training set might impact the overall accuracy of the model.
+The number of training images varies widely by 10 fold from < 200 images for some classes () to > 2000 images for others. I use the training set as provide for the first few rounds of model training, but I do take note that the class imbalance in this training set might impact the overall accuracy of the model. 
 
 ![Training Set Stat][trainging_set_stat_image]
 
 ###Design and Test a Model Architecture
+
+### Preprocessing ###
+###### back to [Table of Contents](#table-of-contents)
 
 ####1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
 ![sampled_class_00][sampled_class_00]
 Sample training set images in class 0. 
 
-
 ![sampled_class_17][sampled_class_17]
 Sample training set images in class 17. 
 
-From visual inspection, I found that images in each classes are very different in average illumination across all channels and the pixel intensities in many of the images do not span the entire dynamic range. To adjust the dynamic range of the images, I used cv2's histogram equalization on RGB channels of each images separately and restack the channels. 
+From visual inspection, I found that images in each classes are very different in average illumination across all channels and the pixel intensities in many of the images do not span the entire dynamic range. To adjust the dynamic range of the images, I used cv2's histogram equalization on RGB channels of each images separately and restack the channels. I think there's might be signal in the different channel so I use all the color channels as input to the model.
 
 ```python
 def equalizeHistRbg(image): 
@@ -70,16 +78,35 @@ def equalizeHistRbg(image):
     return eq
 ```
 
+Here is an example of a traffic sign image before and after histogram equalization.
 
-Here is an example of a traffic sign image before and after grayscaling.
+![hist_eq_1_before][hist_eq_1_before]
+![hist_eq_1_after][hist_eq_1_after]
 
-![alt text][image2]
+![hist_eq_3_before][hist_eq_3_before]
+![hist_eq_3_after][hist_eq_3_after]
 
-As a last step, I normalized the image data because ...
+As a last step, I normalized the image data to make sure that the input values range from -0.5 - 0.5. The input intensity array are 8-bit (`dtype=uint8`) i.e. the intensity values range from 0 - 256. To apply rescaling, element-wise subtract 128 from the input intensity value then divide by 256. Here's my implementation of the image normalization. 
 
-I decided to generate additional data because ... 
+```python
+def normalize(image):
+    return (image - 128)/256
+```
+In the first iteration of the model training, I train a baseline model with the imbalance training set as I'm interested in how this base line model perform without additional data. To add more data to the the data set, I am planning to use `keras`'s `datagen` module. I have implemented the code for generating more dataset here. 
 
-To add more data to the the data set, I used the following techniques because ... 
+```python
+from keras.preprocessing.image import ImageDataGenerator
+
+datagen = ImageDataGenerator(
+        rotation_range=40,
+        width_shift_range=0.2,
+        height_shift_range=0.2,
+        rescale=1./255,
+        shear_range=0.2,
+        zoom_range=0.2,
+        horizontal_flip=False,
+        fill_mode='nearest')
+```
 
 Here is an example of an original image and an augmented image:
 
@@ -87,35 +114,46 @@ Here is an example of an original image and an augmented image:
 
 The difference between the original data set and the augmented data set is the following ... 
 
+### Model Architecture ###
+###### back to [Table of Contents](#table-of-contents)
 
 ####2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
-My final model consisted of the following layers:
+My baseline model architecture is inspired by LeNet. Since there are more classes in Traffic Sign data sets than MNIST, I add a one more Convolution-Relu-MaxPool stack and two more fully connected layers to make the model deeper. Here's the final architecture of my baseline model.
 
-| Layer         		|     Description	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
-| RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
-|						|												|
-|						|												|
+| Layer                 		|     Description	        					| 
+|:-----------------------------:|:---------------------------------------------:| 
+| Input         		        | 32x32x3 RGB image   							| 
+| Stack 1: Convolution 5x5     	| 1x1 stride, same padding, outputs 32x32x16 	|
+| Stack 1: RELU					|												|
+| Stack 1: Max pooling	      	| 2x2 stride, outputs 16x16x64 		    		|
+| Stack 2: Convolution 5x5     	| 1x1 stride, same padding, outputs 16x16x64 	|
+| Stack 2: RELU					|												|
+| Stack 2: Max pooling	      	| 2x2 stride, outputs 4x4x256 		    		|
+| Stack 3: Convolution 5x5     	| 1x1 stride, same padding, outputs 4x4x256 	|
+| Stack 3: RELU					|												|
+| Stack 3: Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
+| Fully connected 1	        	| etc.        									|
+| Fully connected 2		        | etc.        									|
+| Fully connected 3		        | etc.        									|
+| Softmax				        | etc.        									|
  
 
 
+### Model Training And Evaluation ###
+###### back to [Table of Contents](#table-of-contents)
 ####3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
-To train the model, I used an ....
+Optimizer: AdamOptimizer
+Number of Epoch: 
+Learning Rate: 
 
 ####4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
 My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ?
+* training set accuracy of 1.000
+* validation set accuracy of 0.947 
+* test set accuracy of 0.910
 
 If an iterative approach was chosen:
 * What was the first architecture that was tried and why was it chosen?
