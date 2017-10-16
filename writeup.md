@@ -38,6 +38,7 @@ The goals / steps of this project are the following:
 [traffic_sign_12]: ./traffic_external_test_images/class40_roundabout/class40_roundabout_image02.jpg "Traffic Sign 12"
 [all_test_traffic_signs]: ./report_images/all_test_images.png "all test images"
 
+[confusion_matrix]: ./report_images/confusion_matrix.png "confusion matrix of the current model"
 
 [trainging_set_stat_image]: ./report_images/training_set_stats.png "Training Set Stat"
 [sampled_class_00]: ./report_images/sampled_class00.png "Class 00 sampled images"
@@ -177,7 +178,31 @@ For testing on new images, I downloaded 12 German traffic signs from on the Goog
 
 ![all_test_traffic_signs][all_test_traffic_signs] 
 
-####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
+The model was able to correctly guess 10 of the 12 traffic signs, which gives an accuracy of 83.33%, while the testing set accuracy quite a bit higher (91.0%). The top class model predicted probabilities is summarized in the table below
+
+| Truth                                 | Prediction                            | Probability | 
+|:-------------------------------------:|:-------------------------------------:|:-----------:|  
+| Right-of-way at the next intersection | Right-of-way at the next intersection | 1.0         | 
+| Priority road                         | Priority road                         | 1.0         |
+| Priority road                         | Priority road                         | 1.0         | 
+| Yield                                 | Yield                                 | 1.0         |
+| Yield                                 | Priority road                         | 0.650       | 
+| Stop                                  | Stop                                  | 0.876       |
+| Stop                                  | No entry                              | 1.0         | 
+| No entry                              | No entry                              | 1.0         |
+| End of all speed and passing limits   | End of all speed and passing limits   | 0.999       | 
+| Keep right                            | Keep right                            | 1.0         |
+| Roundabout mandatory                  | Roundabout mandatory                  | 1.0         |
+| Roundabout mandatory                  | Roundabout mandatory                  | 1.0         |
+
+For 11 of out 12 images, the model is relatively sure that about its prediction with only one image in which the model predicts a probability of 0.65 (the model predictions the probabilities > 0.8 for all the other images). The first misclassified image is a yield sign with a white rectangle on the bottom. The model classifies it as "Priority Road" with probability 0.65, i.e. the model is not entirely sure of its prediction. 
+![web_result_5][web_result_5]
+
+The second misclassified image is a rotated stop sign in which the model prediction it's a "No entry" with probability of 1.0. This is an manifestation that the model does not seem to generalize well beyond the provided training and validation sets as simple rotation of the sign can "fool" the network to misclassify the input. The image of ths misclassified rotated Stop sign is shown here. 
+![web_result_7][web_result_7]
+
+To comprehensive understand the current model performance I plotted the confusion matrix: 
+![confusion_matrix][confusion_matrix]
 
 Here are some of the results of the predictions:
 
@@ -188,23 +213,25 @@ Here are some of the results of the predictions:
 ![web_result_9][web_result_9]
 ![web_result_10][web_result_10]
 
-The model was able to correctly guess 10 of the 12 traffic signs, which gives an accuracy of 83.33%, while the testing set accuracy quite a bit higher (91.0%). The two images are misclassified are shown below. 
-![web_result_5][web_result_5]
-![web_result_7][web_result_7]
 
-####3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
+The code for making predictions on my final model is located in the 11th cell of the Ipython notebook and is also included here
+```python
+import operator
+import json
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook. and is also included here
+def top_n_class(prob, num_top_n=2):    
+    top_n = [(signname_dict[i], prob[i]) for i in np.argsort(prob)[::-1]][:num_top_n]
+    return top_n
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
+with tf.Session() as sess:
+    sess = tf.get_default_session()
+    saver.restore(sess, tf.train.latest_checkpoint('.'))
+    soft_max_ops = tf.nn.softmax(logits)
+    predicted_probabilities = soft_max_ops.eval(feed_dict={x: X_test_external.astype('uint32')})
+    data_with_predictions['top_5_prediction'] = [top_n_class(p, num_top_n=5) for p in predicted_probabilities]
+    data_with_predictions['Truth_SignName'] = data_with_predictions['y_true'].apply(lambda x: signname_dict[x])
+```
 
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
 
 
 For the second image ... 
