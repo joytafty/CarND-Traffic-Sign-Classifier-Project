@@ -31,11 +31,16 @@ The goals / steps of this project are the following:
 [traffic_sign_5]: ./traffic_external_test_images/class13_yield/class13_yield_image01.jpg "Traffic Sign 5"
 [traffic_sign_6]: ./traffic_external_test_images/class14_stop/class14_stop_image01.jpg "Traffic Sign 6"
 [traffic_sign_7]: ./traffic_external_test_images/class14_stop/class14_stop_image02.jpg "Traffic Sign 7"
-[traffic_sign_8]: ./traffic_external_test_images/class14_stop/class17_stop_image01.jpg "Traffic Sign 8"
-[traffic_sign_9]: ./traffic_external_test_images/class17_noentry/class17_noentry_image02.jpg "Traffic Sign 9"
-[traffic_sign_10]: ./traffic_external_test_images/class32_endofallspeedpassinglimit/class32_endofallspeedpassinglimit_image01.jpg "Traffic Sign 10"
-[traffic_sign_11]: ./traffic_external_test_images/class38_keepright/class38_keepright_image01.jpg "Traffic Sign 11"
-[traffic_sign_12]: ./traffic_external_test_images/class40_roundabout/class40_roundabout_image01.jpg "Traffic Sign 12"
+[traffic_sign_8]: ./traffic_external_test_images/class14_stop/class17_noentry_image01.jpg "Traffic Sign 8"
+[traffic_sign_9]: ./traffic_external_test_images/class32_endofallspeedpassinglimit/class32_endofallspeedpassinglimit_image01.jpg "Traffic Sign 9"
+[traffic_sign_10]: ./traffic_external_test_images/class38_keepright/class38_keepright_image01.jpg "Traffic Sign 10"
+[traffic_sign_11]: ./traffic_external_test_images/class40_roundabout/class40_roundabout_image01.jpg "Traffic Sign 11"
+[traffic_sign_12]: ./traffic_external_test_images/class40_roundabout/class40_roundabout_image02.jpg "Traffic Sign 12"
+[all_test_traffic_signs]: ./report_images/all_test_images.png "all test images"
+
+[confusion_matrix]: ./report_images/confusion_matrix.png "confusion matrix of the current model"
+[testing_accuracy_vs_training_set_size]: ./report_images//TestAccuracyVSTrainingSetSize.png "confusion matrix of the current model"
+
 [trainging_set_stat_image]: ./report_images/training_set_stats.png "Training Set Stat"
 [sampled_class_00]: ./report_images/sampled_class00.png "Class 00 sampled images"
 [sampled_class_09]: ./report_images/sampled_class09.png "Class 09 sampled images"
@@ -61,7 +66,7 @@ The goals / steps of this project are the following:
 [web_result_12]: ./report_images/webImagePredictions/test_result12.png
 
 
-Here is a link to my [project code](Traffic_Sign_Classifier.ipynb)
+Here is a link to my [project code](Traffic_Sign_Classifier.ipynb) and the [additional work](Traffic_Sign_Classifier-Backup.ipynb)
 
 ### Data Set Exploration ###
 ###### back to [Table of Contents](#table-of-contents)
@@ -170,45 +175,66 @@ With the final architecture discussed above, my modified LeNet model was able to
 I'm planning to add dropout layers in the next iteration of the model, but I'm running out of time. 
 
 #### Testing On New Images ####
-For testing on new images, I downloaded 12 German traffic signs from on the Google images, cropped and resized them to 32x32x3. Here are the example of the images before cropping and resizing:
+For testing on new images, I downloaded 12 German traffic signs from on the Google images, cropped and resized them to 32x32x3. Here are the example of the images after cropping and resizing:
 
-![traffic_sign_1][traffic_sign_1] ![traffic_sign_2][traffic_sign_2] ![traffic_sign_3][traffic_sign_3]![traffic_sign_4][traffic_sign_4] 
-![traffic_sign_5][traffic_sign_5] ![traffic_sign_6][traffic_sign_6]![traffic_sign_7][traffic_sign_7] ![traffic_sign_8][traffic_sign_8]
-![traffic_sign_9][traffic_sign_9]![traffic_sign_10][traffic_sign_10] ![traffic_sign_11][traffic_sign_11] ![traffic_sign_12][traffic_sign_12] 
+![all_test_traffic_signs][all_test_traffic_signs] 
 
-####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
+The code for making predictions on my final model is located in the 11th cell of the Ipython notebook and is also included here
+```python
+import operator
+import json
 
-Here are some of the results of the predictions:
+def top_n_class(prob, num_top_n=2):    
+    top_n = [(signname_dict[i], prob[i]) for i in np.argsort(prob)[::-1]][:num_top_n]
+    return top_n
 
-![web_result_1][web_result_1]
-![web_result_2][web_result_2]
-![web_result_4][web_result_4]
-![web_result_6][web_result_6]
-![web_result_9][web_result_9]
-![web_result_10][web_result_10]
+with tf.Session() as sess:
+    sess = tf.get_default_session()
+    saver.restore(sess, tf.train.latest_checkpoint('.'))
+    soft_max_ops = tf.nn.softmax(logits)
+    predicted_probabilities = soft_max_ops.eval(feed_dict={x: X_test_external.astype('uint32')})
+    data_with_predictions['top_5_prediction'] = [top_n_class(p, num_top_n=5) for p in predicted_probabilities]
+    data_with_predictions['Truth_SignName'] = data_with_predictions['y_true'].apply(lambda x: signname_dict[x])
+```
+The model was able to correctly guess 10 of the 12 traffic signs, which gives an accuracy of **83.33%**, while the testing set accuracy quite a bit higher (**91.0%**). The top class model predicted probabilities is summarized in the table below
 
-The model was able to correctly guess 10 of the 12 traffic signs, which gives an accuracy of 83.33%, while the testing set accuracy quite a bit higher (91.0%). The two images are misclassified are shown below. 
+| Truth                                 | Prediction                            | Probability | 
+|:-------------------------------------:|:-------------------------------------:|:-----------:|  
+| Right-of-way at the next intersection | Right-of-way at the next intersection | 1.0         | 
+| Priority road                         | Priority road                         | 1.0         |
+| Priority road                         | Priority road                         | 1.0         | 
+| Yield                                 | Yield                                 | 1.0         |
+| Yield                                 | Priority road                         | 0.650       | 
+| Stop                                  | Stop                                  | 0.876       |
+| Stop                                  | No entry                              | 1.0         | 
+| No entry                              | No entry                              | 1.0         |
+| End of all speed and passing limits   | End of all speed and passing limits   | 0.999       | 
+| Keep right                            | Keep right                            | 1.0         |
+| Roundabout mandatory                  | Roundabout mandatory                  | 1.0         |
+| Roundabout mandatory                  | Roundabout mandatory                  | 1.0         |
+
+For 11 of out 12 images, the model is relatively sure that about its prediction with only one image in which the model predicts a probability of 0.65 (the model predictions the probabilities > 0.8 for all the other images). The first misclassified image is a yield sign with a white rectangle on the bottom. The model classifies it as "Priority Road" with probability 0.65, i.e. the model is not entirely sure of its prediction. 
 ![web_result_5][web_result_5]
+
+The second misclassified image is a rotated stop sign in which the model prediction it's a "No entry" with probability of 1.0. This is an manifestation that the model does not seem to generalize well beyond the provided training and validation sets as simple rotation of the sign can "fool" the network to misclassify the input. The image of ths misclassified rotated Stop sign is shown here. 
 ![web_result_7][web_result_7]
 
-####3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
+To gain a more comprehensive understanding of the current model performance, I plot the confusion matrix below. Most of the off diagonal entries have very low probabilities, with a small number of these having probabilities between 0.1 and 0.5.  
+![confusion_matrix][confusion_matrix]
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook. and is also included here
+I'm also interested in understanding whether the imbalance training set affects the testing set accuracy. The plot of testing set accuracy as a function of training set size shows that all the classes with testing set accuracy < 0.75 all have training set size < 1000 images. On the other hands, not all classes with small training set size < 1000 images per class have high accuracy. My hypothesis is that the images within classes that have low testing set accuracy are confusible among themselves.
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
+![testing_accuracy_vs_training_set_size][testing_accuracy_vs_training_set_size]
 
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+### Suggestion for Improvements ###
+There 3 areas I would like to improve on the current model 
+1. Balance training set size by generating more data with Image Augmentation
+If I have more time to work on the project, I will use Keras `Data Augmentation` library to generate more images per classes with augmentation including rotation, flipping, and blurrying. Having more images per classes should provide the model with more examples at training time and might mitigate overfitting. Balancing the training set by feeding the model with the same number of training images per classes help train the model to not bias toward any particular classes. More importantly the augmentation/aberration should help the model to generalize better. 
 
+2. Experimenting with adding Dropout layer
+Adding Dropout layer to the model has been shown to help deep neural network to avoid overfitting.
 
-For the second image ... 
+3. Allow model to predict on Traffic sign
 
-### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
-####1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
-
+###### back to [Table of Contents](#table-of-contents)
 
