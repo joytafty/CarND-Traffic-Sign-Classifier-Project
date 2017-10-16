@@ -39,6 +39,7 @@ The goals / steps of this project are the following:
 [all_test_traffic_signs]: ./report_images/all_test_images.png "all test images"
 
 [confusion_matrix]: ./report_images/confusion_matrix.png "confusion matrix of the current model"
+[testing_accuracy_vs_training_set_size]: ./report_images//TestAccuracyVSTrainingSetSize.png "confusion matrix of the current model"
 
 [trainging_set_stat_image]: ./report_images/training_set_stats.png "Training Set Stat"
 [sampled_class_00]: ./report_images/sampled_class00.png "Class 00 sampled images"
@@ -201,18 +202,12 @@ For 11 of out 12 images, the model is relatively sure that about its prediction 
 The second misclassified image is a rotated stop sign in which the model prediction it's a "No entry" with probability of 1.0. This is an manifestation that the model does not seem to generalize well beyond the provided training and validation sets as simple rotation of the sign can "fool" the network to misclassify the input. The image of ths misclassified rotated Stop sign is shown here. 
 ![web_result_7][web_result_7]
 
-To comprehensive understand the current model performance I plotted the confusion matrix: 
+To comprehensive understand the current model performance I plotted the confusion matrix below. Most of the off diagonal entries have very low probabilities, with a small number of these having probabilities between 0.1 and 0.5.  
 ![confusion_matrix][confusion_matrix]
 
-Here are some of the results of the predictions:
+I'm also interested in understanding whether the imbalance training set affects the testing set accuracy. The plot of testing set accuracy as a function of training set size shows that all the classes with testing set accuracy < 0.75 all have training set size < 1000 images. On the other hands, not all classes with small training set size < 1000 images per class have high accuracy. My hypothesis is that the images within classes that have low testing set accuracy are confusible among themselves.
 
-![web_result_1][web_result_1]
-![web_result_2][web_result_2]
-![web_result_4][web_result_4]
-![web_result_6][web_result_6]
-![web_result_9][web_result_9]
-![web_result_10][web_result_10]
-
+![testing_accuracy_vs_training_set_size][testing_accuracy_vs_training_set_size]
 
 The code for making predictions on my final model is located in the 11th cell of the Ipython notebook and is also included here
 ```python
