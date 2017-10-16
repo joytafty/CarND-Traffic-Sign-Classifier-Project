@@ -31,11 +31,14 @@ The goals / steps of this project are the following:
 [traffic_sign_5]: ./traffic_external_test_images/class13_yield/class13_yield_image01.jpg "Traffic Sign 5"
 [traffic_sign_6]: ./traffic_external_test_images/class14_stop/class14_stop_image01.jpg "Traffic Sign 6"
 [traffic_sign_7]: ./traffic_external_test_images/class14_stop/class14_stop_image02.jpg "Traffic Sign 7"
-[traffic_sign_8]: ./traffic_external_test_images/class14_stop/class17_stop_image01.jpg "Traffic Sign 8"
-[traffic_sign_9]: ./traffic_external_test_images/class17_noentry/class17_noentry_image02.jpg "Traffic Sign 9"
-[traffic_sign_10]: ./traffic_external_test_images/class32_endofallspeedpassinglimit/class32_endofallspeedpassinglimit_image01.jpg "Traffic Sign 10"
-[traffic_sign_11]: ./traffic_external_test_images/class38_keepright/class38_keepright_image01.jpg "Traffic Sign 11"
-[traffic_sign_12]: ./traffic_external_test_images/class40_roundabout/class40_roundabout_image01.jpg "Traffic Sign 12"
+[traffic_sign_8]: ./traffic_external_test_images/class14_stop/class17_noentry_image01.jpg "Traffic Sign 8"
+[traffic_sign_9]: ./traffic_external_test_images/class32_endofallspeedpassinglimit/class32_endofallspeedpassinglimit_image01.jpg "Traffic Sign 9"
+[traffic_sign_10]: ./traffic_external_test_images/class38_keepright/class38_keepright_image01.jpg "Traffic Sign 10"
+[traffic_sign_11]: ./traffic_external_test_images/class40_roundabout/class40_roundabout_image01.jpg "Traffic Sign 11"
+[traffic_sign_12]: ./traffic_external_test_images/class40_roundabout/class40_roundabout_image02.jpg "Traffic Sign 12"
+[all_test_traffic_signs]: ./traffic_external_test_images/all_test_images.png "all test images"
+
+
 [trainging_set_stat_image]: ./report_images/training_set_stats.png "Training Set Stat"
 [sampled_class_00]: ./report_images/sampled_class00.png "Class 00 sampled images"
 [sampled_class_09]: ./report_images/sampled_class09.png "Class 09 sampled images"
@@ -170,11 +173,9 @@ With the final architecture discussed above, my modified LeNet model was able to
 I'm planning to add dropout layers in the next iteration of the model, but I'm running out of time. 
 
 #### Testing On New Images ####
-For testing on new images, I downloaded 12 German traffic signs from on the Google images, cropped and resized them to 32x32x3. Here are the example of the images before cropping and resizing:
+For testing on new images, I downloaded 12 German traffic signs from on the Google images, cropped and resized them to 32x32x3. Here are the example of the images after cropping and resizing:
 
-![traffic_sign_1][traffic_sign_1] ![traffic_sign_2][traffic_sign_2] ![traffic_sign_3][traffic_sign_3]![traffic_sign_4][traffic_sign_4] 
-![traffic_sign_5][traffic_sign_5] ![traffic_sign_6][traffic_sign_6]![traffic_sign_7][traffic_sign_7] ![traffic_sign_8][traffic_sign_8]
-![traffic_sign_9][traffic_sign_9]![traffic_sign_10][traffic_sign_10] ![traffic_sign_11][traffic_sign_11] ![traffic_sign_12][traffic_sign_12] 
+![all_test_traffic_signs][all_test_traffic_signs] 
 
 ####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
