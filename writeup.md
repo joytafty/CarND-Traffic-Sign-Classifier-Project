@@ -166,14 +166,15 @@ With the final architecture discussed above, my modified LeNet model was able to
 I'm planning to add dropout layers in the next iteration of the model, but I'm running out of time. 
 
 #### Testing On New Images ####
-For testing on new images, I downloaded 8 German traffic signs from on the Google images, cropped and resized them to 32x32x3. Here are the example of the images before cropping and resizing:
+For testing on new images, I downloaded 12 German traffic signs from on the Google images, cropped and resized them to 32x32x3. Here are the example of the images before cropping and resizing:
 
-![traffic_sign_1][traffic_sign_1] ![traffic_sign_2][traffic_sign_2] ![traffic_sign_4][traffic_sign_4] ![traffic_sign_6][traffic_sign_6] 
+![traffic_sign_1][traffic_sign_1] ![traffic_sign_2][traffic_sign_2] ![traffic_sign_3][traffic_sign_3]![traffic_sign_4][traffic_sign_4] 
+![traffic_sign_5][traffic_sign_5] ![traffic_sign_6][traffic_sign_6]![traffic_sign_7][traffic_sign_7] ![traffic_sign_8][traffic_sign_8]
 ![traffic_sign_9][traffic_sign_9]![traffic_sign_10][traffic_sign_10] ![traffic_sign_11][traffic_sign_11] ![traffic_sign_12][traffic_sign_12] 
 
 ####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
-Here are the results of the predictions:
+Here are some of the results of the predictions:
 
 ![web_result_1][web_result_1]
 ![web_result_2][web_result_2]
@@ -182,11 +183,13 @@ Here are the results of the predictions:
 ![web_result_9][web_result_9]
 ![web_result_10][web_result_10]
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The model was able to correctly guess 10 of the 12 traffic signs, which gives an accuracy of 83.33%, while the testing set accuracy quite a bit higher (91.0%). The two images are misclassified are shown below. 
+![web_result_5][web_result_5]
+![web_result_7][web_result_7]
 
 ####3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
+The code for making predictions on my final model is located in the 11th cell of the Ipython notebook. and is also included here
 
 For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
 
