@@ -179,7 +179,24 @@ For testing on new images, I downloaded 12 German traffic signs from on the Goog
 
 ![all_test_traffic_signs][all_test_traffic_signs] 
 
-The model was able to correctly guess 10 of the 12 traffic signs, which gives an accuracy of 83.33%, while the testing set accuracy quite a bit higher (91.0%). The top class model predicted probabilities is summarized in the table below
+The code for making predictions on my final model is located in the 11th cell of the Ipython notebook and is also included here
+```python
+import operator
+import json
+
+def top_n_class(prob, num_top_n=2):    
+    top_n = [(signname_dict[i], prob[i]) for i in np.argsort(prob)[::-1]][:num_top_n]
+    return top_n
+
+with tf.Session() as sess:
+    sess = tf.get_default_session()
+    saver.restore(sess, tf.train.latest_checkpoint('.'))
+    soft_max_ops = tf.nn.softmax(logits)
+    predicted_probabilities = soft_max_ops.eval(feed_dict={x: X_test_external.astype('uint32')})
+    data_with_predictions['top_5_prediction'] = [top_n_class(p, num_top_n=5) for p in predicted_probabilities]
+    data_with_predictions['Truth_SignName'] = data_with_predictions['y_true'].apply(lambda x: signname_dict[x])
+```
+The model was able to correctly guess 10 of the 12 traffic signs, which gives an accuracy of **83.33%**, while the testing set accuracy quite a bit higher (**91.0%**). The top class model predicted probabilities is summarized in the table below
 
 | Truth                                 | Prediction                            | Probability | 
 |:-------------------------------------:|:-------------------------------------:|:-----------:|  
@@ -202,36 +219,9 @@ For 11 of out 12 images, the model is relatively sure that about its prediction 
 The second misclassified image is a rotated stop sign in which the model prediction it's a "No entry" with probability of 1.0. This is an manifestation that the model does not seem to generalize well beyond the provided training and validation sets as simple rotation of the sign can "fool" the network to misclassify the input. The image of ths misclassified rotated Stop sign is shown here. 
 ![web_result_7][web_result_7]
 
-To comprehensive understand the current model performance I plotted the confusion matrix below. Most of the off diagonal entries have very low probabilities, with a small number of these having probabilities between 0.1 and 0.5.  
+To gain a more comprehensive understanding of the current model performance, I plot the confusion matrix below. Most of the off diagonal entries have very low probabilities, with a small number of these having probabilities between 0.1 and 0.5.  
 ![confusion_matrix][confusion_matrix]
 
 I'm also interested in understanding whether the imbalance training set affects the testing set accuracy. The plot of testing set accuracy as a function of training set size shows that all the classes with testing set accuracy < 0.75 all have training set size < 1000 images. On the other hands, not all classes with small training set size < 1000 images per class have high accuracy. My hypothesis is that the images within classes that have low testing set accuracy are confusible among themselves.
 
 ![testing_accuracy_vs_training_set_size][testing_accuracy_vs_training_set_size]
-
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook and is also included here
-```python
-import operator
-import json
-
-def top_n_class(prob, num_top_n=2):    
-    top_n = [(signname_dict[i], prob[i]) for i in np.argsort(prob)[::-1]][:num_top_n]
-    return top_n
-
-with tf.Session() as sess:
-    sess = tf.get_default_session()
-    saver.restore(sess, tf.train.latest_checkpoint('.'))
-    soft_max_ops = tf.nn.softmax(logits)
-    predicted_probabilities = soft_max_ops.eval(feed_dict={x: X_test_external.astype('uint32')})
-    data_with_predictions['top_5_prediction'] = [top_n_class(p, num_top_n=5) for p in predicted_probabilities]
-    data_with_predictions['Truth_SignName'] = data_with_predictions['y_true'].apply(lambda x: signname_dict[x])
-```
-
-
-
-For the second image ... 
-
-### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
-####1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
-
-
