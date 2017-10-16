@@ -1,0 +1,13 @@
+Truth,y_pred_0_class,y_pred_0_prob,y_pred_1_class,y_pred_1_prob,y_pred_2_class,y_pred_2_prob,y_pred_3_class,y_pred_3_prob,y_pred_4_class,y_pred_4_prob
+  Right-of-way at the next intersection,Right-of-way at the next intersection,1.0,Beware of ice/snow,1.842846e-11,General caution,6.4270074e-13,Pedestrians,4.2424216e-13,Roundabout mandatory,4.5475076e-16
+  Priority road,Priority road,1.0,No passing,3.3824522e-23,Vehicles over 3.5 metric tons prohibited,7.4278528e-24,Go straight or right,4.0838873e-26,Traffic signals,1.7056798e-27
+  Priority road,Priority road,1.0,Yield,2.5409783e-10,No passing,9.119587e-11,No vehicles,1.4930057e-11,Stop,2.4375855e-12
+  Yield,Yield,0.99969399,Speed limit (60km/h),0.00030604025,Ahead only,2.0080362e-09,Speed limit (80km/h),3.0768381e-11,Keep left,2.0146853e-12
+  Yield,Priority road,0.65015727,No passing for vehicles over 3.5 metric tons,0.29812166,Speed limit (80km/h),0.022235619,End of no passing by vehicles over 3.5 metric tons,0.010120067,Slippery road,0.0084868902
+  Stop,Stop,0.87641555,Speed limit (20km/h),0.054087959,Speed limit (30km/h),0.049407594,No entry,0.019759467,Yield,0.00017827949
+  Stop,No entry,1.0,Speed limit (30km/h),1.5796827e-11,Go straight or left,1.4415116e-11,Speed limit (20km/h),1.3200354e-11,Traffic signals,3.562225e-12
+  No entry,No entry,1.0,Speed limit (20km/h),6.3727212e-10,Speed limit (30km/h),5.9436643e-11,Traffic signals,1.7612056e-14,Go straight or left,4.4193995e-15
+  End of all speed and passing limits,End of all speed and passing limits,0.99997759,No vehicles,1.1811387e-05,Speed limit (30km/h),7.0201004e-06,End of speed limit (80km/h),1.8892074e-06,No passing,1.5048921e-06
+  Keep right,Keep right,1.0,Go straight or right,1.5742806e-11,Road work,3.0949649e-14,Ahead only,1.3497143e-14,Yield,2.2821261e-15
+  Roundabout mandatory,Roundabout mandatory,1.0,End of no passing,6.9972736e-11,Speed limit (30km/h),5.5776911e-11,End of all speed and passing limits,5.9258414e-13,No passing,1.7750527e-14
+  Roundabout mandatory,Roundabout mandatory,1.0,Vehicles over 3.5 metric tons prohibited,1.7320593e-18,Keep right,5.8814435e-20,No passing,2.1872051e-20,Keep left,2.6989003e-21
