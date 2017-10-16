@@ -36,7 +36,7 @@ The goals / steps of this project are the following:
 [traffic_sign_10]: ./traffic_external_test_images/class38_keepright/class38_keepright_image01.jpg "Traffic Sign 10"
 [traffic_sign_11]: ./traffic_external_test_images/class40_roundabout/class40_roundabout_image01.jpg "Traffic Sign 11"
 [traffic_sign_12]: ./traffic_external_test_images/class40_roundabout/class40_roundabout_image02.jpg "Traffic Sign 12"
-[all_test_traffic_signs]: ./traffic_external_test_images/all_test_images.png "all test images"
+[all_test_traffic_signs]: ./report_images/all_test_images.png "all test images"
 
 
 [trainging_set_stat_image]: ./report_images/training_set_stats.png "Training Set Stat"
