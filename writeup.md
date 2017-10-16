@@ -66,7 +66,7 @@ The goals / steps of this project are the following:
 [web_result_12]: ./report_images/webImagePredictions/test_result12.png
 
 
-Here is a link to my [project code](Traffic_Sign_Classifier.ipynb)
+Here is a link to my [project code](Traffic_Sign_Classifier.ipynb) and the [additional work](Traffic_Sign_Classifier-Backup.ipynb)
 
 ### Data Set Exploration ###
 ###### back to [Table of Contents](#table-of-contents)
@@ -225,3 +225,16 @@ To gain a more comprehensive understanding of the current model performance, I p
 I'm also interested in understanding whether the imbalance training set affects the testing set accuracy. The plot of testing set accuracy as a function of training set size shows that all the classes with testing set accuracy < 0.75 all have training set size < 1000 images. On the other hands, not all classes with small training set size < 1000 images per class have high accuracy. My hypothesis is that the images within classes that have low testing set accuracy are confusible among themselves.
 
 ![testing_accuracy_vs_training_set_size][testing_accuracy_vs_training_set_size]
+
+### Suggestion for Improvements ###
+There 3 areas I would like to improve on the current model 
+1. Balance training set size by generating more data with Image Augmentation
+If I have more time to work on the project, I will use Keras `Data Augmentation` library to generate more images per classes with augmentation including rotation, flipping, and blurrying. Having more images per classes should provide the model with more examples at training time and might mitigate overfitting. Balancing the training set by feeding the model with the same number of training images per classes help train the model to not bias toward any particular classes. More importantly the augmentation/aberration should help the model to generalize better. 
+
+2. Experimenting with adding Dropout layer
+Adding Dropout layer to the model has been shown to help deep neural network to avoid overfitting.
+
+3. Allow model to predict on Traffic sign
+
+###### back to [Table of Contents](#table-of-contents)
+
